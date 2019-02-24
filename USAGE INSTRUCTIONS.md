@@ -1,15 +1,15 @@
 SlushEngine Usage Instructions
 ==============================
 
-Using the SlushEngine Python software package is relativley simple once all of the required packages have been installed. Before powering a SlushEngine device please ensure that you read the hardware notes listed below.
+Using the SlushEngine Python software package is relatively simple once all of the required packages have been installed. Before powering a SlushEngine device please ensure that you read the hardware notes listed below.
 
 Hardware Setup
 --------------
 
-1. Check for correct polarity of the power conection to the SlushDevice
+1. Check for correct polarity of the power connection to the SlushDevice
 2. Check the voltage to the device is within its operating range
-3. Check the oreientation of the connectors between the Raspberry Pi and the SlushEngine device
-4. Have some method of communication with the Raspberri Pi setup. (ie. SSH Terminal, Screen & Keyboard, etc...)
+3. Check the orientation of the connectors between the Raspberry Pi and the SlushEngine device
+4. Have some method of communication with the Raspberry Pi setup. (ie. SSH Terminal, Screen & Keyboard, etc...)
 
 
 Getting Started
@@ -24,7 +24,7 @@ Getting Started
 Moving a Motor
 --------------
 
-When the Slush module is imported it sets some basic defaults on the motor control hardware. These defaults should allow basic usage of a stepper motor in test conditions. To further improve the operation of the motor these settings can be taylor from within the code.
+When the Slush module is imported it sets some basic defaults on the motor control hardware. These defaults should allow basic usage of a stepper motor in test conditions. To further improve the operation of the motor these settings can be tuned from within the code.
 
 Import the required module as done before. This may take ~100ms depending on the device connected
 
@@ -34,18 +34,18 @@ Then we have to create the board object. This object can be later used to access
 
 > $ SlushEngine = Slush.sBoard()
 
-Then we need to create the motor object. Depending on the Slush device in use multiple motor objects can be created in the same way. Each object can be access indicidually for specific control of a motor.
+Then we need to create the motor object. Depending on the Slush device in use multiple motor objects can be created in the same way. Each object can be access individually for specific control of a motor.
 
 > $ Motor = Slush.Motor(0)
 
-Finally to move the motor a simple command is passed to the motor obect that was created. This command will move the motor a specific number of steps. The direction of motion is based on the signage of the intager passed to the object.
+Finally to move the motor a simple command is passed to the motor object that was created. This command will move the motor a specific number of steps. The direction of motion is based on the signage of the integer passed to the object.
 
 > $ Motor.move(-100000)
 
 Changing Motor Settings
 -----------------------
 
-At any point during operation when a motor is not busy the setting can be changed to alter the motors preformance. An example might be changing the motors microstepping level to allow faster motion. This is done by changing the propoerties of the particular motor object. Each initalized motor object can have diffrent settings from others on the same device.
+At any point during operation when a motor is not busy the setting can be changed to alter the motors performance. An example might be changing the motors microstepping level to allow faster motion. This is done by changing the properties of the particular motor object. Each initialized motor object can have different settings from others on the same device.
 
 For example if we wanted to change the motors microstep settings
 

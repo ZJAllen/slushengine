@@ -1,6 +1,6 @@
 ## Slush
 
-The Slush Python package supports the use of the SlushEngine hardware. The SlushEngine hardware is an opensource harware platform for simple motor and industrial interface control. This system is designed to reduce the time it takes to build and create IoT enabled industrial systems. Currently the SlushEngine ecosystem supports the following.
+The Slush Python package supports the use of the SlushEngine hardware. The SlushEngine hardware is an opensource hardware platform for simple motor and industrial interface control. This system is designed to reduce the time it takes to build and create IoT enabled industrial systems. Currently the SlushEngine ecosystem supports the following.
 
 * Driving stepper motors
 * Industrial level Inputs and Outputs
