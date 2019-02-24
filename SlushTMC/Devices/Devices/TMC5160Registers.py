@@ -1,6 +1,6 @@
 __author__ = 'ZJAllen'
 
-'''Source material from https://www.trinamic.com/products/integrated-circuits/details/tmc5160/'''
+'''Source material from https://github.com/trinamic/TMC-API/tree/master/tmc/ic/TMC5160'''
 
 '''Registers'''
 GCONF       = 0x00
