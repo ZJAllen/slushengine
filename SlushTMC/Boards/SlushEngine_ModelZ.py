@@ -3,30 +3,28 @@ __author__ = 'ZJAllen'
 '''motor driver pin defines'''
 TMC5160_Reset = 23
 
-MTR0_StepClock 	= 4
-MTR1_StepClock 	= 5
-MTR2_StepClock 	= 6
-MTR3_StepClock 	= 12
+M0_StepClock 	= 4
+M1_StepClock 	= 5
+M2_StepClock 	= 6
+M3_StepClock 	= 12
 
-MTR0_Busy 	= 16
-MTR1_Busy 	= 17
-MTR2_Busy 	= 18
-MTR3_Busy 	= 19
-MTR3_Busy 	= 20
-MTR3_Busy 	= 21
-MTR3_Busy 	= 22
+M0_Busy = 16
+M1_Busy = 17
+M2_Busy = 18
+M3_Busy = 19
+M4_Busy = 20
+M5_Busy = 21
+M6_Busy = 22
 
-MTR0_ChipSelect 	= 24
-MTR1_ChipSelect 	= 25
-MTR2_ChipSelect 	= 26
-MTR3_ChipSelect 	= 27
-MTR4_ChipSelect         = 20
-MTR5_ChipSelect         = 21
-MTR6_ChipSelect         = 22
+M0_Pin 	= 24
+M1_Pin 	= 25
+M2_Pin 	= 26
+M3_Pin 	= 27
+M4_Pin  = 20
+M5_Pin  = 21
+M6_Pin  = 22
 
-
-
-MTR_Flag	= 13
+MTR_Flag    = 13
 
 '''MCP23 pin defines'''
 MCP23_Reset = 20

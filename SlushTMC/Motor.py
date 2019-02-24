@@ -12,19 +12,19 @@ class Motor(sBoard):
 
         #setting the particular chip parameters
         if motorNumber == 0:
-            self.chipSelect = SLZ.MTR0_ChipSelect
+            self.chipSelect = SLZ.M0_Pin
         if motorNumber == 1:
-            self.chipSelect = SLZ.MTR1_ChipSelect
+            self.chipSelect = SLZ.M1_Pin
         if motorNumber == 2:
-            self.chipSelect = SLZ.MTR2_ChipSelect
+            self.chipSelect = SLZ.M2_Pin
         if motorNumber == 3:
-            self.chipSelect = SLZ.MTR3_ChipSelect
+            self.chipSelect = SLZ.M3_Pin
         if motorNumber == 4:
-            self.chipSelect = SLZ.MTR4_ChipSelect
+            self.chipSelect = SLZ.M4_Pin
         if motorNumber == 5:
-            self.chipSelect = SLZ.MTR5_ChipSelect
+            self.chipSelect = SLZ.M5_Pin
         if motorNumber == 6:
-            self.chipSelect = SLZ.MTR6_ChipSelect
+            self.chipSelect = SLZ.M6_Pin
         #init the hardware
         self.initPeripherals()
 

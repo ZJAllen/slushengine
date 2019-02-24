@@ -1,10 +1,9 @@
-__author__ = 'mangokid'
+__author__ = 'ZJAllen'
 
-from Slush import *
-from Slush.Boards import *
-from Slush.Board import *
-from Slush.Base import *
-from Slush.Motor import *
-from Slush.Temprature import *
-from Slush.ExpansionModules import *
-
+from SlushTMC import *
+from SlushTMC.Boards import *
+from SlushTMC.Board import *
+from SlushTMC.Base import *
+from SlushTMC.Motor import *
+from SlushTMC.Temprature import *
+from SlushTMC.ExpansionModules import *
