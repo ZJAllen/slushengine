@@ -1,7 +1,7 @@
 __author__ = 'ZJAllen'
 
 from SlushTMC.Board import *
-from SlushTMC.Devices import TMC5160Registers as LReg
+from SlushTMC.Devices import TMC5160Registers as TMCReg
 import math
 
 class Motor(sBoard):
@@ -32,7 +32,7 @@ class Motor(sBoard):
     def initPeripherals(self):
 
         #check that the motors SPI is actually working
-        if (self.getParam(LReg.CONFIG) == 0x2e88):
+        if (self.getParam(TMCReg.CONFIG) == 0x2e88):
             print ("Motor Drive Connected on GPIO " + str(self.chipSelect))
             self.boardInUse = 0
         elif (self.getParam([0x1A, 16]) == 0x2c88):
@@ -52,7 +52,7 @@ class Motor(sBoard):
             self.setCurrent(100, 120, 140, 140)
             self.setMicroSteps(16)
 
-        #self.setParam(LReg.KVAL_RUN, 0xff)
+        #self.setParam(TMCReg.KVAL_RUN, 0xff)
         self.getStatus()
         self.free()
 
@@ -78,71 +78,71 @@ class Motor(sBoard):
                 break
             microSteps = microSteps >> 1;
 
-        self.setParam(LReg.STEP_MODE, (0x00 | stepVal | LReg.SYNC_SEL_1))
+        self.setParam(TMCReg.STEP_MODE, (0x00 | stepVal | TMCReg.SYNC_SEL_1))
 
     ''' set the threshold speed of the motor '''
     def setThresholdSpeed(self, thresholdSpeed):
         if thresholdSpeed == 0:
-            self.setParam(LReg.FS_SPD, 0x3ff)
+            self.setParam(TMCReg.FS_SPD, 0x3ff)
         else:
-            self.setParam(LReg.FS_SPD, self.fsCalc(thresholdSpeed))
+            self.setParam(TMCReg.FS_SPD, self.fsCalc(thresholdSpeed))
 
     ''' set the current'''
     def setCurrent(self, hold, run, acc, dec):
-        self.setParam(LReg.KVAL_RUN, run)
-        self.setParam(LReg.KVAL_ACC, acc)
-        self.setParam(LReg.KVAL_DEC, dec)
-        self.setParam(LReg.KVAL_HOLD, hold)
+        self.setParam(TMCReg.KVAL_RUN, run)
+        self.setParam(TMCReg.KVAL_ACC, acc)
+        self.setParam(TMCReg.KVAL_DEC, dec)
+        self.setParam(TMCReg.KVAL_HOLD, hold)
 
     '''set the maximum motor speed'''
     def setMaxSpeed(self, speed):
-        self.setParam(LReg.MAX_SPEED, self.maxSpdCalc(speed))
+        self.setParam(TMCReg.MAX_SPEED, self.maxSpdCalc(speed))
 
     ''' set the minimum speed '''
     def setMinSpeed(self, speed):
-        self.setParam(LReg.MIN_SPEED, self.minSpdCalc(speed))
+        self.setParam(TMCReg.MIN_SPEED, self.minSpdCalc(speed))
 
     ''' set accerleration rate '''
     def setAccel(self, acceleration):
         accelerationBytes = self.accCalc(acceleration)
-        self.setParam(LReg.ACC, accelerationBytes)
+        self.setParam(TMCReg.ACC, accelerationBytes)
 
     ''' set the deceleration rate '''
     def setDecel(self, deceleration):
         decelerationBytes = self.decCalc(deceleration)
-        self.setParam(LReg.DEC, decelerationBytes)
+        self.setParam(TMCReg.DEC, decelerationBytes)
 
     ''' get the posistion of the motor '''
     def getPosition(self):
-        return self.convert(self.getParam(LReg.ABS_POS))
+        return self.convert(self.getParam(TMCReg.ABS_POS))
 
     ''' get the speed of the motor '''
     def getSpeed(self):
-        return self.getParam(LReg.SPEED)
+        return self.getParam(TMCReg.SPEED)
 
     ''' set the overcurrent threshold '''
     def setOverCurrent(self, ma_current):
         OCValue = math.floor(ma_current/375)
         if OCValue > 0x0f: OCValue = 0x0f
-        self.setParam((LReg.OCD_TH), OCValue)
+        self.setParam((TMCReg.OCD_TH), OCValue)
 
     ''' set the stall current level '''
     def setStallCurrent(self, ma_current):
         STHValue = round(math.floor(ma_current/31.25))
         if(STHValue > 0x80): STHValue = 0x80
         if(STHValue < 0): STHValue = 9
-        self.setParam((LReg.STALL_TH), STHValue)
+        self.setParam((TMCReg.STALL_TH), STHValue)
 
     ''' set low speed optamization '''
     def setLowSpeedOpt(self, enable):
-        self.xfer(LReg.SET_PARAM | LReg.MIN_SPEED[0])
+        self.xfer(TMCReg.SET_PARAM | TMCReg.MIN_SPEED[0])
         if enable: self.param(0x1000, 13)
         else: self.param(0, 13)
 
     ''' start the motor spinning '''
     def run(self, dir, spd):
         speedVal = self.spdCalc(spd)
-        self.xfer(LReg.RUN | dir)
+        self.xfer(TMCReg.RUN | dir)
         if speedVal > 0xfffff: speedVal = 0xfffff
         self.xfer(speedVal >> 16)
         self.xfer(speedVal >> 8)
@@ -150,20 +150,20 @@ class Motor(sBoard):
 
     ''' sets the clock source '''
     def stepClock(self, dir):
-        self.xfer(LReg.STEP_CLOCK | dir)
+        self.xfer(TMCReg.STEP_CLOCK | dir)
 
     ''' move the motor a number of steps '''
     def move(self, nStep):
         dir = 0
 
         if nStep >= 0:
-            dir = LReg.FWD
+            dir = TMCReg.FWD
         else:
-            dir = LReg.REV
+            dir = TMCReg.REV
 
         n_stepABS = abs(nStep)
 
-        self.xfer(LReg.MOVE | dir)
+        self.xfer(TMCReg.MOVE | dir)
         if n_stepABS > 0x3fffff: nStep = 0x3fffff
         self.xfer(n_stepABS >> 16)
         self.xfer(n_stepABS >> 8)
@@ -171,7 +171,7 @@ class Motor(sBoard):
 
     ''' move to a position with refrence to the motors current position '''
     def goTo(self, pos):
-        self.xfer(LReg.GOTO)
+        self.xfer(TMCReg.GOTO)
         if pos > 0x3fffff: pos = 0x3fffff
         self.xfer(pos >> 16)
         self.xfer(pos >> 8)
@@ -179,7 +179,7 @@ class Motor(sBoard):
 
     ''' same as go to but with a forced direction '''
     def goToDir(self, dir, pos):
-        self.xfer(LReg.GOTO_DIR)
+        self.xfer(TMCReg.GOTO_DIR)
         if pos > 0x3fffff: pos = 0x3fffff
         self.xfer(pos >> 16)
         self.xfer(pos >> 8)
@@ -192,7 +192,7 @@ class Motor(sBoard):
 
     ''' go until switch press event occurs '''
     def goUntilPress(self, act, dir, spd):
-        self.xfer(LReg.GO_UNTIL | act | dir)
+        self.xfer(TMCReg.GO_UNTIL | act | dir)
         if spd > 0x3fffff: spd = 0x3fffff
         self.xfer(spd >> 16)
         self.xfer(spd >> 8)
@@ -204,7 +204,7 @@ class Motor(sBoard):
 
     ''' go until switch release event occurs '''
     def goUntilRelease(self, act, dir):
-        self.xfer(LReg.RELEASE_SW | act | dir)
+        self.xfer(TMCReg.RELEASE_SW | act | dir)
 
     ''' reads the value of the switch '''
     def readSwitch(self):
@@ -213,17 +213,17 @@ class Motor(sBoard):
 
     ''' go home '''
     def goHome(self):
-        self.xfer(LReg.GO_HOME)
+        self.xfer(TMCReg.GO_HOME)
 
     ''' go to mark position '''
     def goMark(self):
-        self.xfer(LReg.GO_MARK)
+        self.xfer(TMCReg.GO_MARK)
 
     ''' set mark point '''
     def setMark(self, value):
 
         if value == 0: value = self.getPosition()
-        self.xfer(LReg.MARK)
+        self.xfer(TMCReg.MARK)
         if value > 0x3fffff: value = 0x3fffff
         if value < -0x3fffff: value = -0x3fffff
 
@@ -233,34 +233,34 @@ class Motor(sBoard):
 
     ''' set current position to the home position '''
     def setAsHome(self):
-        self.xfer(LReg.RESET_POS)
+        self.xfer(TMCReg.RESET_POS)
 
     ''' reset the device to initial conditions '''
     def resetDev(self):
-        self.xfer(LReg.RESET_DEVICE)
+        self.xfer(TMCReg.RESET_DEVICE)
         if self.boardInUse == 1: self.setParam([0x1A, 16], 0x3608)
         if self.boardInUse == 0: self.setParam([0x1A, 16], 0x3608)
 
     ''' stop the motor using the decel '''
     def softStop(self):
-        self.xfer(LReg.SOFT_STOP)
+        self.xfer(TMCReg.SOFT_STOP)
 
     ''' hard stop the motor without concern for decel curve '''
     def hardStop(self):
-        self.xfer(LReg.HARD_STOP)
+        self.xfer(TMCReg.HARD_STOP)
 
     ''' decelerate the motor and the disable hold '''
     def softFree(self):
-        self.xfer(LReg.SOFT_HIZ)
+        self.xfer(TMCReg.SOFT_HIZ)
 
     ''' disable hold '''
     def free(self):
-        self.xfer(LReg.HARD_HIZ)
+        self.xfer(TMCReg.HARD_HIZ)
 
     ''' get the status of the motor '''
     def getStatus(self):
         temp = 0;
-        self.xfer(LReg.GET_STATUS)
+        self.xfer(TMCReg.GET_STATUS)
         temp = self.xfer(0) << 8
         temp += self.xfer(0)
         return temp
@@ -344,12 +344,12 @@ class Motor(sBoard):
 
     ''' set a parameter of the motor driver '''
     def setParam(self, param, value):
-        self.xfer(LReg.SET_PARAM | param[0])
+        self.xfer(TMCReg.SET_PARAM | param[0])
         return self.paramHandler(param, value)
 
     ''' get a parameter from the motor driver '''
     def getParam(self, param):
-        self.xfer(LReg.GET_PARAM | param[0])
+        self.xfer(TMCReg.GET_PARAM | param[0])
         return self.paramHandler(param, 0)
 
     ''' convert twos compliment '''
