@@ -25,7 +25,7 @@ The next step is to install the I2C python libraries. Quick2Wire does an excelle
 
 [Quick2wire installation and API](https://github.com/quick2wire/quick2wire-python-api)
 
-### Installation
+## Installation
 
 Once all of the above packages are installed you can install the Slush library. First you will need a copy of the Slush source. You can clone the repository or you can download and unzip the zip package.
 
