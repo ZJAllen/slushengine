@@ -1,4 +1,4 @@
-###Motor Control Commands
+### Motor Control Commands
 This page describes many of the commands that can be used to control the SlushEngine motor drivers. All of the commands are described with there input parameters and some examples are given. Please note that the motor setup and initialization is negated in most examples.
 
 #### Some Quick Fundamentals about Stepper Motors
@@ -6,7 +6,7 @@ If you do not work with stepper motors this might be a quick and easy read to he
 
 ![Stepper Motor GIF from Wikipedia](https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/StepperMotor.gif/200px-StepperMotor.gif)
 
-A stepper motors resolution (or number of steps per revolution) is mechanically defined by how many poles there are in the motor. Most stepper motors that are commonly available have 200 steps per revolution, or 1.8 degrees of travel per step. We employ what is referred to as microstepping to divde the current between poles to produce a lower torque higher resolution step count. In the case of the SlushEngines this can be (1/2 - 1/128). This gives us an effective resolution of 0.014 degrees per step.
+A stepper motor's resolution (or number of steps per revolution) is mechanically defined by how many poles there are in the motor. Most stepper motors that are commonly available have 200 steps per revolution, or 1.8 degrees of travel per step. We employ what is referred to as microstepping to divde the current between poles to produce a lower torque higher resolution step count. In the case of the SlushEngines this can be (1/2 - 1/128). This gives us an effective resolution of 0.014 degrees per step.
 
 The SlushEngine system does all of the work of driving a stepper motor for you. There is no need to understand how to control step rate, decay mode, micro stepping and direction change (but it is interesting stuff if you want to learn). The basics you should know about how the SlushEngine controls motors are as follows.
 
